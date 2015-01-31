@@ -16,3 +16,5 @@ data = {}
 data["grant_type"] = "client_credentials"
 r = requests.post("https://api.twitter.com/oauth2/token", headers=headers, data=data)
 print(r.text)
+
+auth = json.loads(r.text)
