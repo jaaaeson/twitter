@@ -2,7 +2,7 @@ import requests # thus far, only in Python 2.x
 import urllib2, urllib
 import base64
 import json
-# r = requests.get('https://api.github.com/events')
+import yweather # for WOEIDs
 
 ## Encoding consumer key and consumer secret ##
 headers = {}
@@ -32,7 +32,12 @@ def search(q, lang="en", count=10):
                               "&lang=" + lang + \
                              "&count=" + str(count) )
 
-rqdata = search("#fail :)")
+woeidgen = yweather.Client()
+def trendsByLocation(location):
+    woeid = woeidgen.fetch_woeid(location)
+    return get("trends/place.json?id="+woeid)
+
+rqdata = trendsByLocation("New York") # search("#fail :)")
 print(json.dumps(rqdata, sort_keys=True, \
                  indent=4, separators=(',', ': ')) )
 
