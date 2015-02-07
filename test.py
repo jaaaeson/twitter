@@ -1,4 +1,4 @@
-import requests 
+import requests # thus far, only in Python 2.x
 import urllib2, urllib
 import base64
 import json
@@ -33,8 +33,6 @@ def search(q, lang="en", count=10):
                              "&count=" + str(count) )
 
 rqdata = search("#fail :)")
-# get("search/tweets.json?q=%23fail%20:)&lang=en&count=4")
-#print(rqdata.text)
 print(json.dumps(rqdata, sort_keys=True, \
                  indent=4, separators=(',', ': ')) )
 
