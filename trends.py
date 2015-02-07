@@ -34,6 +34,20 @@ WOEID = client.fetch_woeid('Australia')
 #rqdata = get("search/tweets.json?q=%23fail%20:)&lang=en&count=4")
 rqdata = get("trends/place.json?id=" +WOEID)
 #https://api.twitter.com/1.1/trends/place.json?id=1
-#print(rqdata.text)
-print(json.dumps(rqdata, sort_keys=True, \
-                 indent=4, separators=(',', ': ')) )
+#print(rqdata)
+#print(json.dumps(rqdata, sort_keys=True, \
+#               indent=4, separators=(',', ': ')) )
+trends = rqdata[0]['trends']
+#print(json.dumps(trends, sort_keys=True, indent=4))
+
+'''for i in range(len(trends)):
+    print trends[i]["name"]
+    
+    print'''
+
+for trend in trends:
+    print trend["name"]
+
+
+#print(json.dumps(rqdata, sort_keys=True, \
+#indent=4, separators=(',', ': ')) )
