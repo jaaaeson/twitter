@@ -1,4 +1,4 @@
-# twitter
+# Twitter API Project
 
 ## Dependencies
 * [requests](http://docs.python-requests.org/en/latest/) (Python 2.x)
