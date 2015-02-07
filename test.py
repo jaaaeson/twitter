@@ -15,6 +15,19 @@ headers["Content-Type"] = "application/x-www-form-urlencoded;charset=UTF-8."
 data = {}
 data["grant_type"] = "client_credentials"
 r = requests.post("https://api.twitter.com/oauth2/token", headers=headers, data=data)
-print(r.text)
+#print(r.text)
 
 auth = json.loads(r.text)
+#print("Token type: " + auth['token_type'])
+#print("Access token: " + auth['access_token'])
+def get(url):
+    headers = {
+        'Authorization': auth['token_type'] + " " + auth['access_token']
+    }
+    rq = requests.get("https://api.twitter.com/1.1/" + url, headers=headers)
+    return json.loads(rq.text)
+
+rqdata = get("search/tweets.json?q=%23fail%20:)&lang=en&count=4")
+#print(rqdata.text)
+print(json.dumps(rqdata, sort_keys=True, \
+                 indent=4, separators=(',', ': ')) )
