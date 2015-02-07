@@ -27,7 +27,14 @@ def get(url):
     rq = requests.get("https://api.twitter.com/1.1/" + url, headers=headers)
     return json.loads(rq.text)
 
-rqdata = get("search/tweets.json?q=%23fail%20:)&lang=en&count=4")
+def search(q, lang="en", count=10):
+    return get("search/tweets.json?q=" + urllib.quote_plus(q) + \
+                              "&lang=" + lang + \
+                             "&count=" + str(count) )
+
+rqdata = search("#fail :)")
+# get("search/tweets.json?q=%23fail%20:)&lang=en&count=4")
 #print(rqdata.text)
 print(json.dumps(rqdata, sort_keys=True, \
                  indent=4, separators=(',', ': ')) )
+
