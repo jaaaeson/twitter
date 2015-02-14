@@ -31,7 +31,6 @@ def search(q, lang="en", count=10):
     return get("search/tweets.json?q=" + urllib.quote_plus(q) + \
                               "&lang=" + lang + \
                              "&count=" + str(count) )
-
 woeidgen = yweather.Client()
 def trendsByLocation(location):
     woeid = woeidgen.fetch_woeid(location)
