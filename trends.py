@@ -1,11 +1,9 @@
-import requests
+import requests 
 import urllib2, urllib
 import base64
 import json
 import yweather
-# r = requests.get('https://api.github.com/events')
 
-## Encoding consumer key and consumer secret ##
 headers = {}
 consumer_key = "3sTAvWUnGJZA2m5zzrctNUiFs"
 consumer_secret = "78ma62jkA7d4mrm6xXTUcRzzX6F4iGaIFGpoFUSAevqUuZt4wC"
@@ -16,11 +14,9 @@ headers["Content-Type"] = "application/x-www-form-urlencoded;charset=UTF-8."
 data = {}
 data["grant_type"] = "client_credentials"
 r = requests.post("https://api.twitter.com/oauth2/token", headers=headers, data=data)
-#print(r.text)
 
 auth = json.loads(r.text)
-#print("Token type: " + auth['token_type'])
-#print("Access token: " + auth['access_token'])
+
 def get(url):
     headers = {
         'Authorization': auth['token_type'] + " " + auth['access_token']
@@ -29,25 +25,12 @@ def get(url):
     return json.loads(rq.text)
 
 client = yweather.Client()
-WOEID = client.fetch_woeid('Australia')
+WOEID = client.fetch_woeid('New York City')
 
-#rqdata = get("search/tweets.json?q=%23fail%20:)&lang=en&count=4")
 rqdata = get("trends/place.json?id=" +WOEID)
-#https://api.twitter.com/1.1/trends/place.json?id=1
-#print(rqdata)
-#print(json.dumps(rqdata, sort_keys=True, \
-#               indent=4, separators=(',', ': ')) )
-trends = rqdata[0]['trends']
-#print(json.dumps(trends, sort_keys=True, indent=4))
 
-'''for i in range(len(trends)):
-    print trends[i]["name"]
-    
-    print'''
+trends = rqdata[0]['trends']
 
 for trend in trends:
     print trend["name"]
 
-
-#print(json.dumps(rqdata, sort_keys=True, \
-#indent=4, separators=(',', ': ')) )
