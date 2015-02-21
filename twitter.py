@@ -27,13 +27,14 @@ def get(url):
     rq = requests.get("https://api.twitter.com/1.1/" + url, headers=headers)
     return json.loads(rq.text)
 
-def search(q, lang="en", count=10):
-    return get("search/tweets.json?q=" + urllib.quote_plus(q) + \
+def tweets(q, lang="en", count=10):
+    data = get("search/tweets.json?q=" + urllib.quote_plus(q) + \
                               "&lang=" + lang + \
                              "&count=" + str(count) )
+    return [tweet['text'] for tweet in data['statuses']]
 
 woeidgen = yweather.Client()
 def trendsByLocation(location):
     woeid = woeidgen.fetch_woeid(location)
-    return get("trends/place.json?id="+woeid)[0]['trends']
+    return [trend['name'] for trend in get("trends/place.json?id="+woeid)[0]['trends']]
 

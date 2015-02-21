@@ -5,7 +5,14 @@
     <li>
     {{trend["name"]}}
     </li>
-    {%endfor%}
+    <ul>
+      {% for tweet in trend["tweets"] %}
+      <li>
+	{{tweet}}
+      </li>
+      {% endfor %}
+    </ul>
+    {% endfor %}
     </ol>
 </body>
 </html>

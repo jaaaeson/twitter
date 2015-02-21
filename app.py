@@ -6,7 +6,16 @@ from twitter import *
 
 
 def trends():
-    return trendsByLocation('New York')
+    L = trendsByLocation('New York')
+    yolo = []
+    for trend in L:
+        yolo.append(
+            {
+                "name": trend,
+                "tweets": tweets(trend)
+            }
+        )
+    return yolo
 
 app = Flask(__name__)
 
