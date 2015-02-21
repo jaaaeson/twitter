@@ -1,4 +1,9 @@
+<!DOCTYPE html>
 <html>
+<head>
+<title>{% for trend in trends[:2] %}{{trend["name"]}}, {% endfor %} and more</title>
+<meta charset="UTF-8">
+</head>
 <body>
     <ol>
     {% for trend in trends %}
