@@ -5,20 +5,15 @@ from twitter import *
 # the constructor
 
 
-def trendsPrint():
-    rqdata = trendsByLocation("1") # search("#fail :)")
-    trends = rqdata[0]['trends']
-    return trends
-
-
+def trends():
+    return trendsByLocation('New York')
 
 app = Flask(__name__)
 
 @app.route("/home")
 @app.route("/") 
 def home():
-
-    return render_template("results.html", trends=trendsPrint())
+    return render_template("results.html", trends=trends())
 
 if __name__=="__main__":
     app.debug=True

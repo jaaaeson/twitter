@@ -31,10 +31,9 @@ def search(q, lang="en", count=10):
     return get("search/tweets.json?q=" + urllib.quote_plus(q) + \
                               "&lang=" + lang + \
                              "&count=" + str(count) )
+
 woeidgen = yweather.Client()
 def trendsByLocation(location):
     woeid = woeidgen.fetch_woeid(location)
-    return get("trends/place.json?id="+woeid)
+    return get("trends/place.json?id="+woeid)[0]['trends']
 
-#print(json.dumps(rqdata, sort_keys=True, \
-#                 indent=4, separators=(',', ': ')) )
