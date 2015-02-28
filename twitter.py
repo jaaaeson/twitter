@@ -29,8 +29,8 @@ def get(url):
 
 def tweets(q, lang="en", count=10):
     data = get("search/tweets.json?q=" + urllib.quote_plus(q) + \
-                              "&lang=" + lang + \
-                             "&count=" + str(count) )
+               "&lang=" + lang + \
+               "&count=" + str(count) )
     return [tweet['text'] for tweet in data['statuses']]
 
 woeidgen = yweather.Client()
