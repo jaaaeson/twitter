@@ -15,7 +15,7 @@ print
 def wordCount(tweets):
     words = []
     for tweet in tweets:
-        words.extend(re.findall(r'(?:(?:http://t.co/)|[@#]?)\w+', tweet))
+        words.extend(re.findall(r'(?:(?:http://t\.co/)|[@#]?)\w+', tweet))
     d = {}
     for word in words:
         if word not in d:
