@@ -15,6 +15,7 @@ def trends():
                 "tweets": tweets(trend)
             }
         )
+    print yolo
     return yolo
 
 app = Flask(__name__)
