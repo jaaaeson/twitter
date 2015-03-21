@@ -1,13 +1,13 @@
 from twitter import *
 import re
 
-trends = trendsByLocation("Australia")
+trends = trendsByLocation("United States")
 query = trends[1]# '"' + '" OR "'.join(trends) + '"'
 print trends[1]
 tweetss = tweets(query, count=1000)
 
-for tweet in tweetss:
-    print tweet
+#for tweet in tweetss:
+#   print tweet
 
 print
 
@@ -19,14 +19,14 @@ def wordCount(tweetsList):
         words.extend(re.findall(r'(?:(?:https?://t\.co/)|[@#]?)\w+', tweet))
     d = {}
     for word in words:
-        if word not in d and len(word) > 3 and not word.startswith('http'):
+        if word.lower() not in d and len(word) > 3 and not word.startswith('http'):
             ct = words.count(word)
-            d[word] = ct
+            d[word.lower()] = ct
     return d
 
 def dictListRev(dictionary):
     swag = []
-    print len(dictionary)
+    #    print len(dictionary)
     for k, v in dictionary.iteritems():
         swag.append((v, k))
     swag = sorted(swag,reverse=True)
@@ -34,13 +34,32 @@ def dictListRev(dictionary):
 
 wordCount = wordCount(tweetss)
 
-print(json.dumps(wordCount, sort_keys=True, \
-                 indent=4, separators=(',', ': ')) )
+#print(json.dumps(wordCount, sort_keys=True, \
+ #                indent=4, separators=(',', ': ')) )
 
 listResults = dictListRev(wordCount)[0:10]
-print listResults
+#print listResults
 x = [v for k, v in listResults[1:]]
 y = [k for k, v in listResults[1:]]
+
+def maxIndex(L):
+    max = 0
+    maxdex = -1
+    for i in xrange(len(L)):
+        if L[i] > max:
+            max = L[i]
+            maxdex = i
+    return maxdex
+
+def closeMatch(comWords, tweetsList):
+    scoreboard = [0 for tweet in tweetsList]
+    for (count, word) in comWords[1:]:
+        for (i, tweet) in enumerate(tweetsList):
+            if word in tweet:
+                scoreboard[i] += count
+    return tweetsList[maxIndex(scoreboard)]
+
+print closeMatch(listResults, tweetss)
 
 import plotly.plotly as py
 from plotly.graph_objs import *
@@ -48,53 +67,37 @@ from plotly.graph_objs import *
 data = Data([
              Bar(
                  x=x,
-                 y=y
-                 )
+                 y=y,
+                 name='',
+                 marker=Marker(
+                               color='rgb(0, 149 ,255)'
+                               ))
              ])
-plot_url = py.plot(data, filename=str(listResults[0][1]))
 
+layout = Layout(
+                title=listResults[0][1],
+                xaxis=XAxis(
+                            title='Hashtags and Words',
+                            titlefont=Font(
+                                           size=16,
+                                           color='rgb(107, 107, 107)'
+                                           ),
 
-"""import plotly.plotly as py
-from plotly.graph_objs import *
-
-tuples = wordCount.items()#.sort(cmp=lambda (k0, v0), (k1, v1): cmp(v1, v0))
-
-x = [k for k, v in tuples][:10]
-y = [v for k, v in tuples][:10]
-
-data = Data([
-             Bar(
-                 x=x,
-                 y=y
-                 )
-             ])
-plot_url = py.plot(data, filename='basic-bar')
-
-"""
-
-'''
-def dictionary(listTweets):
-    words = []
-    for tweet in listTweets:
-        words.extend(re.findall(r'(?:(?:http://t\.co/)|[@#]?)\w+', tweet))
-    list = []
-    listWords = []
-    for word in words:
-        
-        if word not in listWords:
-            if len(word) > 3:
-                listWords.append(word)
-                list.append((listTweets.count(word), word))
-
-
-
-    dTweets = sorted(list,reverse=True)
-    return dTweets
-'''
-
-
-#print tweets("NFLCombine")
-
-"""for i in range(5):
-    print str(listResults[i][0]) + str(" ") + str(dTweets[i][1])"""
-
+                            tickfont=Font(
+                                          size=14,
+                                          color='rgb(107, 107, 107)'
+                                          )
+                            ),
+                yaxis=YAxis(
+                            title='Number of Occurrences',
+                            titlefont=Font(
+                                           size=16,
+                                           color='rgb(107, 107, 107)'
+                                           ),
+                            tickfont=Font(
+                                          size=14,
+                                          color='rgb(107, 107, 107)'
+                                          )
+                            ))
+fig = Figure(data=data, layout=layout)
+plot_url = py.plot(fig, filename=str(listResults[0][1]))
