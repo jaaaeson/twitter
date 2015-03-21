@@ -11,7 +11,7 @@ app = Flask(__name__)
 @app.route("/home")
 @app.route("/") 
 def home():
-    return render_template("display.html", trends=trends, ploturl=plot_url, topTweet = repTweet)
+    return render_template("display.html", trend=listResults[0][1], ploturl=plot_url, topTweet = repTweet)
 #    return render_template("results.html", trends=trends())
 
 if __name__=="__main__":
