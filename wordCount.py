@@ -59,7 +59,7 @@ def closeMatch(comWords, tweetsList):
                 scoreboard[i] += count
     return tweetsList[maxIndex(scoreboard)]
 
-print closeMatch(listResults, tweetss)
+repTweet = closeMatch(listResults, tweetss)
 
 import plotly.plotly as py
 from plotly.graph_objs import *
@@ -101,3 +101,5 @@ layout = Layout(
                             ))
 fig = Figure(data=data, layout=layout)
 plot_url = py.plot(fig, filename=str(listResults[0][1]))
+
+print plot_url

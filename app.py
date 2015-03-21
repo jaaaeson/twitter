@@ -1,29 +1,18 @@
 from flask import Flask,render_template
-from twitter import *
+#from twitter import *
+from wordCount import *
 # this makes app an instance of the Flask class
 # and it passed the special variable __name__ into
 # the constructor
 
-
-def trends():
-    L = trendsByLocation('New York')
-    yolo = []
-    for trend in L:
-        yolo.append(
-            {
-                "name": trend,
-                "tweets": tweets(trend)
-            }
-        )
-    print yolo
-    return yolo
 
 app = Flask(__name__)
 
 @app.route("/home")
 @app.route("/") 
 def home():
-    return render_template("results.html", trends=trends())
+    return render_template("display.html", trends=trends, ploturl=plot_url, topTweet = repTweet)
+#    return render_template("results.html", trends=trends())
 
 if __name__=="__main__":
     app.debug=True
