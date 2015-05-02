@@ -15,13 +15,24 @@ def topTrend(loc):
     query = trends[1]
     print trends[0]
     print trends[1]
-    print
     tweetss = tweets(query, count=1000)
     wCount = wordCount(tweetss)
+    lCount = locCount(tweetss)
     listResults = dictListRev(wCount)[0:10]
-    x = [v for k, v in listResults[1:]]
-    y = [k for k, v in listResults[1:]]
+    print listResults
+    
+    #Most commmon words
+    #x = [v for k, v in listResults[1:]]
+    #y = [k for k, v in listResults[1:]]
+    
+    #Locations of common tweets
+    x = [v for k, v in lCount[1:10]]
+    y = [k for k, v in lCount[1:10]]
+    
+    
     repTweet = closeMatch(listResults, tweetss)
+    sortLoc = sorted(lCount, key=lambda tup: tup[0])
+    print sortLoc
     data = Data([
                  Bar(
                      x=x,

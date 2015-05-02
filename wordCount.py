@@ -11,16 +11,39 @@ import re
 
 # MapReduce word count
 
+def isSignificant(word):
+    return word.lower() not in [u'there',u'this',u'that',u'also',u'with',u'then',u'your',u'during',u'than']
+
+
 def wordCount(tweetsList):
     words = []
     for tweet in tweetsList:
-        words.extend(re.findall(r'(?:(?:https?://t\.co/)|[@#]?)\w+', tweet))
+        words.extend(re.findall(r'(?:(?:https?://t\.co/)|[@#]?)\w+', tweet[0]))
     d = {}
     for word in words:
-        if word.lower() not in d and len(word) > 3 and not word.startswith('http'):
+        if word.lower() not in d and len(word) > 3 and not word.startswith('http') and isSignificant(word):
             ct = words.count(word)
             d[word.lower()] = ct
     return d
+
+def locCount(locationList):
+    locations = []
+    print "LOCATION LIST:"
+    print locationList
+    for location in locationList:
+        locations.append(location[1])
+    print locations
+    e = []
+    for location in locations:
+        if location not in e:
+            if location != "":
+                e.append((locations.count(location), location.lower()))
+#print location
+            #ct = locations.count(location)
+            #e[location.lower()] = ct
+            #e.append()
+
+    return e
 
 def dictListRev(dictionary):
     swag = []
@@ -56,5 +79,6 @@ def closeMatch(comWords, tweetsList):
             if word in tweet:
                 scoreboard[i] += count
     return tweetsList[maxIndex(scoreboard)]
+
 
 #repTweet = closeMatch(listResults, tweetss)
