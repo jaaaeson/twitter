@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{% for trend in trends[:2] %}{{trend["name"]}}, {% endfor %} and more</title>
+<meta charset="UTF-8">
+</head>
+<body>
+    <ol>
+    {% for trend in trends %}
+    <li>
+    {{trend["name"]}}
+    </li>
+    <ul>
+    {% for tweet in trend["tweets"] %}
+      <li>
+	{{tweet}}
+      </li>
+      {% endfor %}
+    </ul>
+    {% endfor %}
+    </ol>
+</body>
+</html>
