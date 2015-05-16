@@ -38,12 +38,7 @@ def locCount(locationList):
         if location not in e:
             if location != "":
                 e.append((locations.count(location), location.lower()))
-#print location
-            #ct = locations.count(location)
-            #e[location.lower()] = ct
-            #e.append()
-
-    return e
+    return sorted(e, key=lambda pair: pair[0], reverse=True)
 
 def dictListRev(dictionary):
     swag = []

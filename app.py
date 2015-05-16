@@ -22,13 +22,8 @@ def topTrend(loc):
     print listResults
     
     #Most commmon words
-    #x = [v for k, v in listResults[1:]]
-    #y = [k for k, v in listResults[1:]]
-    
-    #Locations of common tweets
-    x = [v for k, v in lCount[1:10]]
-    y = [k for k, v in lCount[1:10]]
-    
+    x = [v for k, v in listResults[1:]]
+    y = [k for k, v in listResults[1:]]
     
     repTweet = closeMatch(listResults, tweetss)
     sortLoc = sorted(lCount, key=lambda tup: tup[0])
@@ -42,11 +37,54 @@ def topTrend(loc):
                                    color='rgb(0, 149 ,255)'
                                    ))
                  ])
-
+        
     layout = Layout(
                     title=listResults[0][1],
                     xaxis=XAxis(
                                 title='Hashtags and Words',
+                                titlefont=Font(
+                                               size=16,
+                                               color='rgb(107, 107, 107)'
+                                               ),
+                                tickfont=Font(
+                                              size=14,
+                                              color='rgb(107, 107, 107)'
+                                              )
+                                ),
+                    yaxis=YAxis(
+                                title='Number of Occurrences',
+                                titlefont=Font(
+                                            size=16,
+                                            color='rgb(107, 107, 107)'
+                                            ),
+                                tickfont=Font(
+                                            size=14,
+                                            color='rgb(107, 107, 107)'
+                                            )
+                                )
+                    )
+    fig = Figure(data=data, layout=layout)
+    plot_url0 = py.plot(fig, filename="Common Words: " + str(listResults[0][1]))
+    print plot_url0
+
+    #Locations of common tweets
+    xb = [v for k, v in lCount[1:10]]
+    yb = [k for k, v in lCount[1:10]]
+
+    datab = Data([
+                 Bar(
+                     x=xb,
+                     y=yb,
+                     name='',
+                     marker=Marker(
+                                   color='rgb(0, 149 ,255)'
+                                   ))
+                 ])
+
+    layoutb = Layout(
+                    title=listResults[0][1],
+                    xaxis=XAxis(
+                                title='Locations',
                                 titlefont=Font(
                                                size=16,
                                                color='rgb(107, 107, 107)'
@@ -68,18 +106,19 @@ def topTrend(loc):
                                               color='rgb(107, 107, 107)'
                                               )
                                 ))
-    fig = Figure(data=data, layout=layout)
-    plot_url = py.plot(fig, filename=str(listResults[0][1]))
-    print plot_url
-    return (listResults[0][1], plot_url, repTweet)
+    figb = Figure(data=datab, layout=layoutb)
+    plot_url1 = py.plot(figb, filename="Locations: " + str(listResults[0][1]))
+    print plot_url1
+    return (listResults[0][1], plot_url0, plot_url1, repTweet)
+
 
 app = Flask(__name__)
 
 #@app.route("/home")
 @app.route("/<loc>")
 def home(loc):
-    ttrend, url, repTweet = topTrend(loc)
-    return render_template("display.html", trend=ttrend, ploturl=url, topTweet = repTweet)
+    ttrend, url0, url1, repTweet = topTrend(loc)
+    return render_template("display.html", trend=ttrend, ploturl0=url0, ploturl1=url1, topTweet = repTweet)
 #    return render_template("results.html", trends=trends())
 
 if __name__=="__main__":
