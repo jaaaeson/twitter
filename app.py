@@ -15,7 +15,7 @@ def topTrend(loc):
     query = trends[1]
     print trends[0]
     print trends[1]
-    tweetss = tweets(query, count=1000)
+    tweetss = tweets(query, count=10000)
     wCount = wordCount(tweetss)
     lCount = locCount(tweetss)
     listResults = dictListRev(wCount)[0:10]
@@ -26,7 +26,7 @@ def topTrend(loc):
     y = [k for k, v in listResults[1:]]
     
     repTweet = closeMatch(listResults, tweetss)
-    sortLoc = sorted(lCount, key=lambda tup: tup[0])
+    sortLoc = sorted(lCount, key=lambda tup: tup[0], reverse=True)[:10]
     print sortLoc
     data = Data([
                  Bar(
@@ -68,8 +68,8 @@ def topTrend(loc):
     print plot_url0
 
     #Locations of common tweets
-    xb = [v for k, v in lCount[1:10]]
-    yb = [k for k, v in lCount[1:10]]
+    xb = [v for k, v in sortLoc]
+    yb = [k for k, v in sortLoc]
 
     datab = Data([
                  Bar(
@@ -118,7 +118,7 @@ app = Flask(__name__)
 @app.route("/<loc>")
 def home(loc):
     ttrend, url0, url1, repTweet = topTrend(loc)
-    return render_template("display.html", trend=ttrend, ploturl0=url0, ploturl1=url1, topTweet = repTweet)
+    return render_template("display.html", place=loc, trend=ttrend, ploturl0=url0, ploturl1=url1, topTweet = repTweet)
 #    return render_template("results.html", trends=trends())
 
 if __name__=="__main__":

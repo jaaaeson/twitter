@@ -1,13 +1,88 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>{{trend}}</title>
+    <title>{{trend}}: {{place}} &mdash; Tweet Cracker</title>
 <meta charset="UTF-8">
+<style>
+    body {
+        font-family: sans-serif;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+    }
+
+    header, footer {
+        width: 100%;
+        color: rgb(0, 149, 255);
+        background: rgb(149, 224, 255);
+        padding: 12pt;
+    }
+
+header {
+    border-bottom: 3px solid rgb(0, 149, 255);
+}
+
+    h1, h2 {
+        font-weight: normal;
+        color: rgb(107, 107, 107);
+        line-height: 1;
+        margin-bottom: 6pt;
+        margin-top: 0;
+    }
+
+h1 {
+    font-size: 36pt;
+}
+
+h2 {
+    font-size: 14pt;
+    
+}
+
+#locname {
+    font-size: 24pt;
+    text-align: center;
+    margin-top: 12pt;
+}
+
+#tweet {
+        color: rgb(107, 107, 107);
+        font-size: 16pt;
+        margin: 18pt;
+}
+
+footer {
+    font-size: 11pt;
+    text-align: center;
+    border-top: 1px solid rgb(0, 149, 255);
+    margin: 0;
+}
+
+p {
+    margin-top: 12pt;
+    margin-bottom: 12pt;
+}
+</style>
 </head>
 <body>
+    
+<header>
+    <h1>Tweet Cracker</h1>
+    <h2>By Aidan, Aruna, Emily, and Antigone</h2>
+</header>
+
+<h1 id="locname">{{place}}</h1>
+    
 <iframe width="640" height="480" frameborder="0" seamless="seamless" scrolling="no" src="{{ploturl0}}.embed?width=640&height=480" ></iframe>
 <iframe width="640" height="480" frameborder="0" seamless="seamless" scrolling="no" src="{{ploturl1}}.embed?width=640&height=480" ></iframe>
 
-<p>{{topTweet[0]}} <b> tweeting from </b> {{topTweet[1]}}</p>
+<p id="tweet">{{topTweet[0]}} <br> &mdash;<b>tweeting from</b> {{topTweet[1]}}</p>
+
+
+
+<footer>
+    <p>&copy; 2015 Team Jaaaeson &mdash; wait, how many a's are in Jaaaeson?</p>
+</footer>
+
 </body>
 </html>
