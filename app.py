@@ -10,6 +10,8 @@ from wordCount import *
 import plotly.plotly as py
 from plotly.graph_objs import *
 
+import urllib
+
 def topTrend(loc):
     trends = trendsByLocation(loc)
     query = trends[1]
@@ -118,7 +120,7 @@ app = Flask(__name__)
 @app.route("/<loc>")
 def home(loc):
     ttrend, url0, url1, repTweet = topTrend(loc)
-    return render_template("display.html", place=loc, trend=ttrend, ploturl0=url0, ploturl1=url1, topTweet = repTweet)
+    return render_template("display.html", place=urllib.unquote_plus(loc), trend=ttrend, ploturl0=url0, ploturl1=url1, topTweet = repTweet)
 #    return render_template("results.html", trends=trends())
 
 if __name__=="__main__":
